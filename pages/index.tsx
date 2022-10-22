@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import styles from '../styles/Home.module.css';
-import { H1, H2, H3, Button } from '../components/widgets';
+import { H1, H2, H3, Button, P } from '../components/elements';
 
 
 export default function Home(): JSX.Element {
@@ -18,6 +18,15 @@ export default function Home(): JSX.Element {
         <H3>tese</H3>
         <Button>primary</Button>
         <Button appearance='ghost'>ghost</Button>
+        <P>
+          There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. 
+        </P>
+        <P size='s'>
+          There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. 
+        </P>
+        <P size='l'>
+          There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. 
+        </P>
 
       </main>
 
