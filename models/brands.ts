@@ -1,5 +1,5 @@
 import { Schema, model, models } from 'mongoose';
-import { Local } from '../types/local.interface';
+import { Local } from '../dto/local.interface';
 
 export interface IBrand {
   title: string

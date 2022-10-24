@@ -1,5 +1,5 @@
 import connectMongo from "../../utils/mongoose";
-import { Brands } from "../../models/brands.schema";
+import { Brands } from "../../models/brands";
 
 export default async function handler(req, res) {
   await connectMongo();
@@ -8,7 +8,7 @@ export default async function handler(req, res) {
       try {
         await Brands.create(req.body)
           .then((result) => {
-            res.status(201).json({ message: "Brend created", data: result });
+            res.status(201).json(result);
           })
           .catch((err) => {
             res.status(400).json({ err });
@@ -19,19 +19,14 @@ export default async function handler(req, res) {
       break;
 
     case "PATCH":
-      if (!req.query.id) {
+      if (!req.body.condition || !req.body.data) {
         res.status(400).json({ err: "id parameter not specified" });
         return;
       }
       try {
-        await Brands.findOneAndUpdate({ _id: req.query.id }, req.body)
+        await Brands.findOneAndUpdate(req.body.condition, req.body.data)
           .then((result) => {
-            res
-              .status(202)
-              .json({
-                message: "Brand updated",
-                data: { ...result._doc, ...req.body },
-              });
+            res.status(202).json({ ...result._doc, ...req.body });
           })
           .catch((err) => {
             res.status(400).json({ err });
@@ -46,12 +41,7 @@ export default async function handler(req, res) {
         await Brands.findOneAndDelete(req.body)
           .then((result) => {
             console.log(result);
-            res
-              .status(result ? 202 : 404)
-              .json({
-                message: result ? "Brand deleted" : "not found",
-                data: result,
-              });
+            res.status(result ? 202 : 404).json(result);
           })
           .catch((err) => {
             res.status(400).json({ err });
