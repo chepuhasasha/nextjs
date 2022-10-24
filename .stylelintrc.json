@@ -2,6 +2,7 @@
 	"extends": [
 		"stylelint-config-standard"
 	],
+	"customSyntax": "postcss-sass",
 	"rules": {
 		"indentation": [
 			"tab"
@@ -16,6 +17,5 @@
 				]
 			}
 		]
-	},
-	"customSyntax": "postcss-sass"
+	}
 }
