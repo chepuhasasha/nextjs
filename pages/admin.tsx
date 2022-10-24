@@ -1,12 +1,12 @@
 import Head from "next/head";
-import { BrandItemM } from "../components/blocks";
 import { Button, H1, Input } from "../components/elements";
 import { useEffect, useRef, useState } from "react";
 import { IBrand } from "../models/brands";
 import { API } from "../utils/api";
+import { IProduct } from "../models/products";
 
 export default function Home() {
-  const [data, setData] = useState<IBrand | null>(null);
+  const [data, setData] = useState<IBrand | IProduct | null>(null);
   const [brands, setBrands] = useState({});
   const newBrandItem = useRef('123') 
   const newBrand = () => {
@@ -17,6 +17,25 @@ export default function Home() {
         logo: "test logo",
         baner: "test baner",
         alias: "ultra_v",
+      },
+      (data) => {
+        setData(data);
+      }
+    );
+  };
+  const newProduct = () => {
+    API.products.create(
+      {
+        title: {ru: "тест", en: 'test'},
+        description: { ru: "Описание...", en: "description..." },
+        brand_id: "63564035899bd78019f32101",
+        buy_links: [{marketplace: "ozon", link: "ozon"}],
+        characteristics: [{name: {ru: "характеристика", en: 'characteristic'}, value: {ru: "тест", en: 'test'}}],
+        images: [],
+        tags: [],
+        price: {ru: "100руб.", en: '100000usd'},
+        model: "test",
+        preview: "test"
       },
       (data) => {
         setData(data);
@@ -53,10 +72,13 @@ export default function Home() {
         <Button appearance="ghost" onClick={newBrand}>
           New Brand
         </Button>
+        <Button appearance="ghost" onClick={newProduct}>
+          New Product
+        </Button>
         <Button appearance="ghost" onClick={deleteBrand}>
           Delete Brand
         </Button>
-        <BrandItemM brand={data}></BrandItemM>
+        <pre>{JSON.stringify(data, null, 2)}</pre>
         <pre>{ JSON.stringify(brands, null, 2) }</pre>
       </main>
 
