@@ -12,7 +12,7 @@ export default function Home(): JSX.Element {
       </Head>
 
       <main>
-        <H1>tese</H1>
+        <H1>ABOUT</H1>
         <H2>tese</H2>
         <H3>tese</H3>
         <Button>primary</Button>
