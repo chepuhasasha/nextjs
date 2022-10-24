@@ -1,7 +1,6 @@
 import Head from "next/head";
 import { BrandItemM } from "../components/blocks";
 import { Button } from "../components/elements";
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { IBrand } from "../models/brands";
 import { API } from "../utils/api";
