@@ -1,13 +1,14 @@
 import Head from "next/head";
 import { BrandItemM } from "../components/blocks";
-import { Button } from "../components/elements";
-import { useEffect, useState } from "react";
+import { Button, H1, Input } from "../components/elements";
+import { useEffect, useRef, useState } from "react";
 import { IBrand } from "../models/brands";
 import { API } from "../utils/api";
 
 export default function Home() {
   const [data, setData] = useState<IBrand | null>(null);
   const [brands, setBrands] = useState({});
+  const newBrandItem = useRef('123') 
   const newBrand = () => {
     API.brands.create(
       {
@@ -47,6 +48,8 @@ export default function Home() {
       </Head>
 
       <main>
+        <H1>{newBrandItem.current}</H1>
+        <Input model={newBrandItem}/>
         <Button appearance="ghost" onClick={newBrand}>
           New Brand
         </Button>

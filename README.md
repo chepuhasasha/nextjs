@@ -10,7 +10,7 @@ npm i
 
 ```
 cd docker
-docker-compouse up
+docker-compose up
 ```
 
 ### Dev
