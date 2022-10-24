@@ -40,7 +40,6 @@ export default async function handler(req, res) {
       try {
         await Brands.findOneAndDelete(req.body)
           .then((result) => {
-            console.log(result);
             res.status(result ? 202 : 404).json(result);
           })
           .catch((err) => {

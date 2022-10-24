@@ -25,7 +25,9 @@ export default function Home() {
   };
   const deleteBrand = () => {
     API.brands.delete(
-      {alias: 'ultra_v'},
+      {
+        alias: 'ultra_v'
+      },
       (data) => {
         setData(data);
       }

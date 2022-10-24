@@ -1,5 +1,5 @@
 import axios, { AxiosError } from "axios";
-import { IBrand } from "../models/brands";
+import { IBrand, IBrandDB } from "../models/brands";
 
 export class API {
 
@@ -10,11 +10,11 @@ export class API {
   static brands = {
     create: async (
       brand: IBrand,
-      cb: (data: IBrand) => void,
+      cb: (data: IBrandDB) => void,
       errcb?: (err: AxiosError) => void
     ) => {
       await this.axios
-        .put<IBrand>("brands", brand)
+        .put<IBrandDB>("brands", brand)
         .then((res) => {
           cb(res.data);
         })
@@ -25,13 +25,13 @@ export class API {
 
     get: async (
       condition: {
-        [k in keyof IBrand]?: string
+        [k in keyof IBrandDB]?: string
       }, 
-      cb: (data: IBrand[]) => void,
+      cb: (data: IBrandDB[]) => void,
       errcb?: (err: AxiosError) => void
     ) => {
       await this.axios
-        .post<IBrand[]>("brands", condition)
+        .post<IBrandDB[]>("brands", condition)
         .then((res) => {
           cb(res.data);
         })
@@ -42,13 +42,13 @@ export class API {
 
     delete: async (
       condition: {
-        [k in keyof IBrand]?: string
+        [k in keyof IBrandDB]?: string
       }, 
-      cb: (data: IBrand) => void,
+      cb: (data: IBrandDB) => void,
       errcb?: (err: AxiosError) => void
     ) => {
       await this.axios
-        .delete<IBrand>("brands", {
+        .delete<IBrandDB>("brands", {
           data: condition
         })
         .then((res) => {
@@ -61,14 +61,14 @@ export class API {
 
     update: async (
       condition: {
-        [k in keyof IBrand]?: string
+        [k in keyof IBrandDB]?: string
       },
       data: IBrand,
-      cb: (data: IBrand) => void,
+      cb: (data: IBrandDB) => void,
       errcb?: (err: AxiosError) => void
     ) => {
       await this.axios
-        .patch<IBrand>("brands", {
+        .patch<IBrandDB>("brands", {
           condition,
           data
         })

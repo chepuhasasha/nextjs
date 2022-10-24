@@ -1,4 +1,4 @@
-import { Schema, model, models } from 'mongoose';
+import { Schema, model, models, ObjectId } from 'mongoose';
 import { Local } from '../dto/local.interface';
 
 export interface IBrand {
@@ -7,6 +7,10 @@ export interface IBrand {
   logo: string
   baner: string,
   alias: string
+}
+
+export interface IBrandBD extends IBrand {
+  _id: ObjectId
 }
 
 export const BrandSchema = new Schema<IBrand>({
