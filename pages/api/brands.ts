@@ -1,5 +1,5 @@
 import connectMongo from "../../utils/mongoose";
-import { Brands } from "../../models/brands";
+import { Brands, IBrand } from "../../models/brands";
 
 export default async function handler(req, res) {
   await connectMongo();

@@ -16,7 +16,7 @@ export default function Home() {
         description: { ru: "Описание...", en: "description..." },
         logo: "test logo",
         baner: "test baner",
-        alias: "ultra_v",
+        alias: "ultra_v"+ Math.random(),
       },
       (data) => {
         setData(data);
@@ -45,7 +45,7 @@ export default function Home() {
   const deleteBrand = () => {
     API.brands.delete(
       {
-        alias: 'ultra_v'
+        title: 'Ultra V'
       },
       (data) => {
         setData(data);
