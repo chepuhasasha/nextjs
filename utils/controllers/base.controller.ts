@@ -1,7 +1,9 @@
 import { Model } from "mongoose";
+import connectMongo from "../db/mongoose";
 import { NextApiRequest, NextApiResponse } from "next";
 
 export default async function BaseController(collection: Model<any>, req: NextApiRequest, res: NextApiResponse) {
+  await connectMongo();
   switch (req.method) {
     case "PUT":
       try {

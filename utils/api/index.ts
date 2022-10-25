@@ -3,6 +3,7 @@ import {} from "mongoose";
 import { IBrand, IBrandDB } from "../models/brands";
 import { IProduct, IProductDB } from "../models/products";
 import { IProductsList, IProductsListDB } from "../models/productsList";
+import { IUserDB } from "../models/users";
 
 export type CollectionName = "brands" | "products" | "products_lists";
 
@@ -41,19 +42,33 @@ export class API {
     baseURL: `${process.env.NEXT_PUBLIC_DOMAIN}/api`,
   });
 
-  // static async login(
-  //   data: {login: string, password: string},  
-  //   cb: (data: ) => void,
-  //   errcb?: (error: AxiosError) => void){
-  //   await this.axios
-  //     .post('users/auth', data)
-  //     .then((res) => {
-  //       cb(res.data);
-  //     })
-  //     .catch((err) => {
-  //       if (errcb) errcb(err);
-  //     });
-  // }
+  static async signup (
+    data: {username: string, password: string},  
+    cb: (data: IUserDB) => void,
+    errcb?: (error: AxiosError) => void){
+    await this.axios
+      .post('signup', data)
+      .then((res) => {
+        cb(res.data);
+      })
+      .catch((err) => {
+        if (errcb) errcb(err);
+      });
+  }
+
+  static async login(
+    data: {username: string, password: string},  
+    cb: (data: IUserDB) => void,
+    errcb?: (error: AxiosError) => void){
+    await this.axios
+      .post('auth/login', data)
+      .then((res) => {
+        cb(res.data);
+      })
+      .catch((err) => {
+        if (errcb) errcb(err);
+      });
+  }
 
   static async create<T, K>(
     collection: CollectionName,

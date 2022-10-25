@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { H1, Input } from "../../components/elements";
+import { useUser } from "../../hooks";
 import { IBrandDB, IBrand } from "../../models/brands";
 import { API } from "../../utils/api";
 
 export default function newBrand() {
+  const user = useUser({ redirectTo: '/login' })
   const { register, handleSubmit, watch, formState: { errors } } = useForm<IBrand>();
   const onSubmit: SubmitHandler<IBrand> = data => newBrand(data);
   const [brands, setBrands] = useState<IBrandDB[]| null>(null);
