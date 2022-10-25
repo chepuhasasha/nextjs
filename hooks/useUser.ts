@@ -16,8 +16,6 @@ const fetcher = async (url) =>
 export function useUser(redirectTo: string) {
   const { data, error } = useSWR("/api/user", fetcher);
   const user = data?.data;
-  const finished = Boolean(data);
-  const hasUser = Boolean(user);
   
   useEffect(() => {
     if (user === null) {
