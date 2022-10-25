@@ -4,9 +4,10 @@ import { useEffect, useRef, useState } from "react";
 import { IBrand } from "../models/brands";
 import { API } from "../utils/api";
 import { IProduct } from "../models/products";
+import { IProductsList } from "../models/productsList";
 
 export default function Home() {
-  const [data, setData] = useState<IBrand | IProduct | null>(null);
+  const [data, setData] = useState<IBrand | IProduct | IProductsList| null>(null);
   const [brands, setBrands] = useState({});
   const newBrandItem = useRef('123') 
   const newBrand = () => {
@@ -36,6 +37,18 @@ export default function Home() {
         price: {ru: "100руб.", en: '100000usd'},
         model: "test",
         preview: "test"
+      },
+      (data) => {
+        setData(data);
+      }
+    );
+  };
+  const newProductsList = () => {
+    API.productsList.create(
+      {
+        title: {ru: "тест", en: 'test'},
+        description: { ru: "Описание...", en: "description..." },
+        products: []
       },
       (data) => {
         setData(data);
@@ -74,6 +87,9 @@ export default function Home() {
         </Button>
         <Button appearance="ghost" onClick={newProduct}>
           New Product
+        </Button>
+        <Button appearance="ghost" onClick={newProductsList}>
+          New ProductsList
         </Button>
         <Button appearance="ghost" onClick={deleteBrand}>
           Delete Brand

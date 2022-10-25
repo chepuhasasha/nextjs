@@ -2,8 +2,9 @@ import axios, { AxiosError } from "axios";
 import {} from "mongoose";
 import { IBrand, IBrandDB } from "../models/brands";
 import { IProduct, IProductBD } from "../models/products";
+import { IProductsList, IProductsListDB } from "../models/productsList";
 
-export type CollectionName = "brands" | "products";
+export type CollectionName = "brands" | "products" | "products_lists";
 
 export interface CollectionMethods<T, K> {
   create: (
@@ -149,6 +150,24 @@ export class API {
 
     update: async (condition, data, cb, errcb?) => {
       await this.update<IProduct>("products", condition, data, cb, errcb);
+    },
+  };
+
+  static productsList: CollectionMethods<IProductsList, IProductsListDB> = {
+    create: async (data, cb, errcb?) => {
+      await this.create<IProductsList, IProductsListDB>("products_lists", data, cb, errcb);
+    },
+
+    get: async (condition, cb, errcb?) => {
+      await this.get<IProductsListDB>("products_lists", condition, cb, errcb);
+    },
+
+    delete: async (condition, cb, errcb?) => {
+      await this.delete<IProductsListDB>("products_lists", condition, cb, errcb);
+    },
+
+    update: async (condition, data, cb, errcb?) => {
+      await this.update<IProductsList>("products_lists", condition, data, cb, errcb);
     },
   };
 }
