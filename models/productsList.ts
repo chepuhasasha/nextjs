@@ -1,9 +1,8 @@
-import { Schema, model, models, ObjectId } from 'mongoose';
-import { ILocal, LocalSchema } from './local';
+import { Schema, model, models } from 'mongoose';
 
 export interface IProductsList {
-  title: ILocal
-  description: ILocal
+  title: string
+  description: string
   products: string[]
 }
 
@@ -12,8 +11,8 @@ export interface IProductsListDB extends IProductsList {
 }
 
 export const ProductsListSchema = new Schema<IProductsList>({
-  title: LocalSchema, 
-  description: LocalSchema,
+  title: String, 
+  description: String,
   products: {type: [String], required: true},
 });
 

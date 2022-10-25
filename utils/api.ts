@@ -1,7 +1,7 @@
 import axios, { AxiosError } from "axios";
 import {} from "mongoose";
 import { IBrand, IBrandDB } from "../models/brands";
-import { IProduct, IProductBD } from "../models/products";
+import { IProduct, IProductDB } from "../models/products";
 import { IProductsList, IProductsListDB } from "../models/productsList";
 
 export type CollectionName = "brands" | "products" | "products_lists";
@@ -40,6 +40,20 @@ export class API {
   static axios = axios.create({
     baseURL: `${process.env.NEXT_PUBLIC_DOMAIN}/api`,
   });
+
+  // static async login(
+  //   data: {login: string, password: string},  
+  //   cb: (data: ) => void,
+  //   errcb?: (error: AxiosError) => void){
+  //   await this.axios
+  //     .post('users/auth', data)
+  //     .then((res) => {
+  //       cb(res.data);
+  //     })
+  //     .catch((err) => {
+  //       if (errcb) errcb(err);
+  //     });
+  // }
 
   static async create<T, K>(
     collection: CollectionName,
@@ -135,17 +149,17 @@ export class API {
     },
   };
 
-  static products: CollectionMethods<IProduct, IProductBD> = {
+  static products: CollectionMethods<IProduct, IProductDB> = {
     create: async (data, cb, errcb?) => {
-      await this.create<IProduct, IProductBD>("products", data, cb, errcb);
+      await this.create<IProduct, IProductDB>("products", data, cb, errcb);
     },
 
     get: async (condition, cb, errcb?) => {
-      await this.get<IProductBD>("products", condition, cb, errcb);
+      await this.get<IProductDB>("products", condition, cb, errcb);
     },
 
     delete: async (condition, cb, errcb?) => {
-      await this.delete<IProductBD>("products", condition, cb, errcb);
+      await this.delete<IProductDB>("products", condition, cb, errcb);
     },
 
     update: async (condition, data, cb, errcb?) => {
@@ -155,7 +169,12 @@ export class API {
 
   static productsList: CollectionMethods<IProductsList, IProductsListDB> = {
     create: async (data, cb, errcb?) => {
-      await this.create<IProductsList, IProductsListDB>("products_lists", data, cb, errcb);
+      await this.create<IProductsList, IProductsListDB>(
+        "products_lists",
+        data,
+        cb,
+        errcb
+      );
     },
 
     get: async (condition, cb, errcb?) => {
@@ -163,11 +182,22 @@ export class API {
     },
 
     delete: async (condition, cb, errcb?) => {
-      await this.delete<IProductsListDB>("products_lists", condition, cb, errcb);
+      await this.delete<IProductsListDB>(
+        "products_lists",
+        condition,
+        cb,
+        errcb
+      );
     },
 
     update: async (condition, data, cb, errcb?) => {
-      await this.update<IProductsList>("products_lists", condition, data, cb, errcb);
+      await this.update<IProductsList>(
+        "products_lists",
+        condition,
+        data,
+        cb,
+        errcb
+      );
     },
   };
 }

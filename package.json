@@ -16,8 +16,16 @@
     "mongodb": "^3.5.9",
     "mongoose": "^6.6.7",
     "next": "12.3.1",
+    "next-auth": "^4.15.0",
     "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "react-dom": "18.2.0",
+    "react-hook-form": "^7.38.0",
+    "@hapi/iron": "6.0.0",
+    "cookie": "0.4.1",
+    "next-connect": "0.8.1",
+    "passport": "0.4.1",
+    "passport-local": "1.0.0",
+    "uuid": "8.3.1"
   },
   "devDependencies": {
     "@svgr/webpack": "^6.5.0",

@@ -1,34 +1,33 @@
-import { Schema, model, models, ObjectId } from 'mongoose';
-import { ILocal, LocalSchema } from './local';
+import { Schema, model, models } from 'mongoose';
 
 export interface IProduct {
-  title: ILocal
-  description: ILocal
+  title: string
+  description: string
   brand_id: string
   tags: string[]
-  characteristics: {name: ILocal, value: ILocal}[] 
+  characteristics: {name: string, value: string}[] 
   model: string
   images: string[]
   preview: string
-  price: ILocal
+  price: string
   buy_links: {marketplace: string, link: string}[]
 }
 
 
-export interface IProductBD extends IProduct {
+export interface IProductDB extends IProduct {
   _id: string
 }
 
 export const ProductSchema = new Schema<IProduct>({
-  title: LocalSchema,
-  description: LocalSchema,
-  brand_id: String,
+  title: {type: String, required: true},
+  description: {type: String, required: true},
+  brand_id: {type: String, required: true},
   tags: [String],
-  characteristics: {name: LocalSchema, value: LocalSchema}, 
+  characteristics: {name: String, value: String}, 
   model: String,
   images: [String],
   preview: String,
-  price: LocalSchema,
+  price: String,
   buy_links: [{marketplace: String, link: String}]
 });
 

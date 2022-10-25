@@ -1,10 +1,10 @@
 import Head from "next/head";
-import { Button, H1, Input } from "../components/elements";
+import { Button, H1, Input } from "../../components/elements";
 import { useEffect, useRef, useState } from "react";
-import { IBrand } from "../models/brands";
-import { API } from "../utils/api";
-import { IProduct } from "../models/products";
-import { IProductsList } from "../models/productsList";
+import { IBrand } from "../../models/brands";
+import { API } from "../../utils/api";
+import { IProduct } from "../../models/products";
+import { IProductsList } from "../../models/productsList";
 
 export default function Home() {
   const [data, setData] = useState<IBrand | IProduct | IProductsList| null>(null);
