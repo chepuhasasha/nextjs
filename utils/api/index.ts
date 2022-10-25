@@ -42,6 +42,19 @@ export class API {
     baseURL: `${process.env.NEXT_PUBLIC_DOMAIN}/api`,
   });
 
+  static async user(
+    cb: (data: IUserDB) => void,
+    errcb?: (error: AxiosError) => void){
+    await this.axios
+      .get('user')
+      .then((res) => {
+        cb(res.data);
+      })
+      .catch((err) => {
+        if (errcb) errcb(err);
+      });
+  }
+
   static async signup (
     data: {username: string, password: string},  
     cb: (data: IUserDB) => void,
@@ -62,6 +75,19 @@ export class API {
     errcb?: (error: AxiosError) => void){
     await this.axios
       .post('auth/login', data)
+      .then((res) => {
+        cb(res.data);
+      })
+      .catch((err) => {
+        if (errcb) errcb(err);
+      });
+  }
+
+  static async logout(
+    cb: (data: { message: string}) => void,
+    errcb?: (error: AxiosError) => void){
+    await this.axios
+      .get('auth/logout')
       .then((res) => {
         cb(res.data);
       })

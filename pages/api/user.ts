@@ -13,7 +13,7 @@ export default async function handler(req, res) {
       const jwt = cookies.JWT;
 
       if (!jwt) {
-        return res.json({ message: "Invalid token!" });
+        return res.status(401).json({ message: "Invalid token!" });
       }
 
       const payload = verify(jwt, secret);

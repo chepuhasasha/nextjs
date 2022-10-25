@@ -5,8 +5,10 @@ import { IBrand } from "../../models/brands";
 import { API } from "../../utils/api";
 import { IProduct } from "../../models/products";
 import { IProductsList } from "../../models/productsList";
+import { useUser } from "../../hooks";
 
 export default function Home() {
+  const user = useUser('/login')
   const [data, setData] = useState<IBrand | IProduct | IProductsList| null>(null);
   const [brands, setBrands] = useState({});
   const newBrandItem = useRef('123') 

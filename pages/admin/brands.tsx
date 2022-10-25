@@ -6,7 +6,7 @@ import { IBrandDB, IBrand } from "../../models/brands";
 import { API } from "../../utils/api";
 
 export default function newBrand() {
-  const user = useUser({ redirectTo: '/login' })
+  const user = useUser('/login')
   const { register, handleSubmit, watch, formState: { errors } } = useForm<IBrand>();
   const onSubmit: SubmitHandler<IBrand> = data => newBrand(data);
   const [brands, setBrands] = useState<IBrandDB[]| null>(null);

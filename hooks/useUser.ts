@@ -3,31 +3,30 @@ import Router from "next/router";
 import useSWR from "swr";
 import axios from "axios";
 
-const fetcher = (url) =>
-  axios(url)
-    .then((r) => r.data)
-    .then((data) => {
-      return { user: data?.user || null };
+const fetcher = async (url) =>
+  await axios
+    .get(url)
+    .then((res) => {
+      return { data: res.data, error: null };
+    })
+    .catch((error) => {
+      return { data: null, error: error.message };
     });
 
-export function useUser({
-  redirectTo,
-  redirectIfFound,
-}: { redirectTo?: string; redirectIfFound?: string } = {}) {
+export function useUser(redirectTo: string) {
   const { data, error } = useSWR("/api/user", fetcher);
-  const user = data;
+  const user = data?.data;
   const finished = Boolean(data);
   const hasUser = Boolean(user);
-
+  
   useEffect(() => {
-    if (!redirectTo || !finished) return;
-    if (
-      (redirectTo && !redirectIfFound && !hasUser) ||
-      (redirectIfFound && hasUser)
-    ) {
+    if (user === null) {
       Router.push(redirectTo);
     }
-  }, [redirectTo, redirectIfFound, finished, hasUser]);
+  }, [user]);
 
-  return error ? null : user;
+  return {
+    user,
+    error,
+  }
 }
