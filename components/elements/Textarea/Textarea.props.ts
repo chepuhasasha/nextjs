@@ -7,4 +7,5 @@ export interface ITextareaProps extends DetailedHTMLProps<HTMLAttributes<HTMLTex
   label: string
   name: string
   error?: string
+  rows: string
 }

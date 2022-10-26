@@ -19,7 +19,6 @@ export const Textarea = ({ register, name, label, error, ...props }: ITextareaPr
         {error && `: ${error}`}
       </label>
       <textarea 
-        res
         name={name}
         placeholder="Jane"
         ref={(e) => {

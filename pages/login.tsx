@@ -2,8 +2,7 @@ import Head from "next/head";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { Form } from "../components/blocks";
 import { H1, Input } from "../components/elements";
-import { Block } from "../components/wrappers";
-import { Grid } from "../layouts";
+import { Block, Grid } from "../components/wrappers";
 import { API } from "../utils/api";
 
 type UserForm = {
@@ -20,7 +19,7 @@ export default function LogIn() {
   const { ref: username, ...restUsername } = register("username", {
     required: true,
   });
-  const { ref: password, ...restPassword } = register("username", {
+  const { ref: password, ...restPassword } = register("password", {
     required: true,
   });
   const onSubmit: SubmitHandler<UserForm> = (data: UserForm) => {
@@ -56,7 +55,7 @@ export default function LogIn() {
               />
               <Input
                 label="Password"
-                type="password"
+                type='password'
                 placeholder="test"
                 register={password}
                 {...restPassword}

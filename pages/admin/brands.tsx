@@ -7,8 +7,10 @@ import { IBrandDB, IBrand } from "../../models/brands";
 import { API } from "../../utils/api";
 import { Block, Grid } from "../../components/wrappers";
 import Head from "next/head";
+import axios from "axios";
+import { GetStaticProps } from "next";
 
-export default function newBrand() {
+export default function newBrand({brands}: {brands: IBrandDB[]}) {
   const user = useUser("/login");
   const {
     register,
@@ -16,8 +18,6 @@ export default function newBrand() {
     formState: { errors },
   } = useForm<IBrand>();
   const onSubmit: SubmitHandler<IBrand> = (data) => newBrand(data);
-  const [brands, setBrands] = useState<IBrandDB[] | null>(null);
-  const [brand, setBrand] = useState<IBrandDB | null>(null);
   const { ref: title, ...restTitle } = register("title", { required: true });
   const { ref: description, ...restDescription } = register("description", {
     required: true,
@@ -26,11 +26,11 @@ export default function newBrand() {
   const [selectedLogo, setSelectedLogo] = useState<string | null>(null);
   const [selectedBaner, setSelectedBaner] = useState<string | null>(null);
 
-  useEffect(() => {
-    API.brands.get({}, (data) => {
-      setBrands(data);
-    });
-  }, [brand]);
+  // useEffect(() => {
+  //   API.brands.get({}, (data) => {
+  //     setBrands(data);
+  //   });
+  // }, [brand]);
 
   const newBrand = (data: IBrand) => {
     if (!selectedLogo && !selectedBaner) {
@@ -44,7 +44,7 @@ export default function newBrand() {
         baner: selectedBaner
       },
       (res) => {
-        setBrand(res);
+        console.log(res)
       },
       (err) => {
         console.log(err);
@@ -92,10 +92,24 @@ export default function newBrand() {
             </Form>
           </Block>
           <Grid rows="auto" cols='1fr' area="1/1/5/4">
-            {brands?.map((brand) => (<BrandAdminPreview key={brand._id} brand={brand} />))}
+            {brands && brands.map((brand) => (<BrandAdminPreview key={brand._id} brand={brand} />))}
           </Grid>
         </Grid>
       </main>
     </>
   );
 }
+
+
+export const getStaticProps: GetStaticProps = async () => {
+  const {data: brands} = await axios.post<IBrandDB[]>(
+    process.env.NEXT_PUBLIC_DOMAIN + "/api/brands",
+    {}
+  );
+
+  return {
+    props: {
+      brands,
+    },
+  };
+};

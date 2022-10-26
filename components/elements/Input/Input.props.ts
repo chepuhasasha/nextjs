@@ -7,4 +7,5 @@ export interface IInputProps extends DetailedHTMLProps<HTMLAttributes<HTMLInputE
   label: string
   name: string
   error?: string
+  type?: string
 }
