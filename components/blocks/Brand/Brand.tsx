@@ -11,6 +11,7 @@ export const BrandAdminPreview = ({
   const deleteBrand = () => {
     API.brands.delete({_id: brand._id}, () => {
       console.log('deleted')
+      Router.reload()
     })
   }
   return (

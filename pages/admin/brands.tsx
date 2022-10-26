@@ -9,9 +9,11 @@ import { Block, Grid } from "../../components/wrappers";
 import Head from "next/head";
 import axios from "axios";
 import { GetStaticProps } from "next";
+import Router from "next/router";
 
 export default function newBrand({brands}: {brands: IBrandDB[]}) {
   const user = useUser("/login");
+
   const {
     register,
     handleSubmit,
@@ -26,12 +28,6 @@ export default function newBrand({brands}: {brands: IBrandDB[]}) {
   const [selectedLogo, setSelectedLogo] = useState<string | null>(null);
   const [selectedBaner, setSelectedBaner] = useState<string | null>(null);
 
-  // useEffect(() => {
-  //   API.brands.get({}, (data) => {
-  //     setBrands(data);
-  //   });
-  // }, [brand]);
-
   const newBrand = (data: IBrand) => {
     if (!selectedLogo && !selectedBaner) {
       alert("select logo");
@@ -45,6 +41,7 @@ export default function newBrand({brands}: {brands: IBrandDB[]}) {
       },
       (res) => {
         console.log(res)
+        Router.reload()
       },
       (err) => {
         console.log(err);
