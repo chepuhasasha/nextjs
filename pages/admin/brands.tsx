@@ -1,19 +1,30 @@
-import { useEffect, useState } from "react";
-import { useForm, SubmitHandler } from "react-hook-form";
-import { H1, Input } from "../../components/elements";
+import { useEffect, useRef, useState } from "react";
+import { useForm, SubmitHandler, UseFormRegisterReturn } from "react-hook-form";
+import { H1, H2, Input, Textarea } from "../../components/elements";
+import { BrandAdminPreview, FileImgInput, Form } from "../../components/blocks";
 import { useUser } from "../../hooks";
 import { IBrandDB, IBrand } from "../../models/brands";
 import { API } from "../../utils/api";
+import { Block, Grid } from "../../components/wrappers";
+import Head from "next/head";
 
 export default function newBrand() {
-  const user = useUser('/login')
-  const { register, handleSubmit, watch, formState: { errors } } = useForm<IBrand>();
-  const onSubmit: SubmitHandler<IBrand> = data => newBrand(data);
-  const [brands, setBrands] = useState<IBrandDB[]| null>(null);
+  const user = useUser("/login");
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<IBrand>();
+  const onSubmit: SubmitHandler<IBrand> = (data) => newBrand(data);
+  const [brands, setBrands] = useState<IBrandDB[] | null>(null);
   const [brand, setBrand] = useState<IBrandDB | null>(null);
-
-
-  // console.log(watch("title_ru"));
+  const { ref: title, ...restTitle } = register("title", { required: true });
+  const { ref: description, ...restDescription } = register("description", {
+    required: true,
+  });
+  const { ref: alias, ...restAlias } = register("alias", { required: true });
+  const [selectedLogo, setSelectedLogo] = useState<string | null>(null);
+  const [selectedBaner, setSelectedBaner] = useState<string | null>(null);
 
   useEffect(() => {
     API.brands.get({}, (data) => {
@@ -22,9 +33,15 @@ export default function newBrand() {
   }, [brand]);
 
   const newBrand = (data: IBrand) => {
+    if (!selectedLogo && !selectedBaner) {
+      alert("select logo");
+      return;
+    }
     API.brands.create(
       {
         ...data,
+        logo: selectedLogo,
+        baner: selectedBaner
       },
       (res) => {
         setBrand(res);
@@ -35,24 +52,50 @@ export default function newBrand() {
     );
   };
 
-
   return (
     <>
-      <H1>NEW BRAND</H1>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <input placeholder="title" {...register("title", { required: true })} />
-        <input placeholder="description" {...register("description", { required: true })} />
-        <input placeholder="alias" {...register("alias", { required: true })} />
-        <input placeholder="logo" {...register("logo", { required: true })} />
-        <input placeholder="baner" {...register("baner", { required: true })} />
-        {errors.description && <span>This field is required</span>}
-        {errors.title && <span>This field is required</span>}
-        
-        <input type="submit" />
-      </form>
+      <Head>
+        <title>Create Next App</title>
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
 
-      <pre>{JSON.stringify(brand, null, 2)}</pre>
-      <pre>{JSON.stringify(brands, null, 2)}</pre>
+      <main className="container">
+        <Grid rows="repeat(4, 1fr)" cols="repeat(3, 1fr) 400px">
+          <Block area="1/4/5/5">
+            <Form
+              title="NEW BRAND"
+              description="create new brand"
+              onSubmit={handleSubmit(onSubmit)}
+            >
+              <Input
+                error={errors.title && "required field"}
+                label="Title"
+                placeholder="test"
+                register={title}
+                {...restTitle}
+              />
+              <Input
+                label="Alias"
+                placeholder="test"
+                register={alias}
+                {...restAlias}
+              />
+              <Textarea
+                rows='14'
+                label="Description"
+                placeholder="test"
+                register={description}
+                {...restDescription}
+              />
+              <FileImgInput text='Add logo...' onFileSelect={(file) => setSelectedLogo(file)} />
+              <FileImgInput text='Add baner...' onFileSelect={(file) => setSelectedBaner(file)} />
+            </Form>
+          </Block>
+          <Grid rows="auto" cols='1fr' area="1/1/5/4">
+            {brands?.map((brand) => (<BrandAdminPreview key={brand._id} brand={brand} />))}
+          </Grid>
+        </Grid>
+      </main>
     </>
   );
 }

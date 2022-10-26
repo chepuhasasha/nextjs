@@ -1,7 +1,6 @@
 import { DetailedHTMLProps, HTMLAttributes } from "react";
-import { IBrand } from "../../../models/brands";
+import { IBrandDB } from "../../../models/brands";
 
 export interface IBrandProps extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement>{
-  brand: IBrand | null,
-  size?: 's' | 'm' | 'l'
+  brand: IBrandDB,
 }
