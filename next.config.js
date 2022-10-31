@@ -8,6 +8,10 @@ const nextConfig = {
       issuer: /\.[jt]sx?$/,
       use: ['@svgr/webpack'],
     })
+    config.module.rules.push({
+      test: /\.(vert|frag)$/i,
+      use: 'raw-loader',
+    })
 
     return config
   },
