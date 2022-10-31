@@ -5,7 +5,7 @@ import type { IMaskProps } from "./Mask.props";
 
 export const MaskBlock = ({
   mode,
-  url = "/img.jpg",
+  url = null,
   ...props
 }: IMaskProps): JSX.Element => {
   const mask = useRef<HTMLDivElement | null>(null);
@@ -14,6 +14,6 @@ export const MaskBlock = ({
     if (mask.current && !pixi) {
       pixi = new Mask(mask.current, mode, url);
     }
-  });
+  }, []);
   return <div className={styles.mask} {...props} ref={mask}></div>;
 };

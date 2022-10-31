@@ -46,10 +46,10 @@ export class Mask {
   lines: IMaskLine[];
   shapes: IMaskShape[];
   masks: IMaskShape[];
-  url: string;
-  stroke: number = 0x8a8c92;
-  bg: number = 0xf1f4f9;
-  offset: number = 0.5;
+  url: string | null;
+  stroke = 0x8a8c92;
+  bg = 0xf1f4f9;
+  offset = 0.5;
   // PIXI
   APP: Application = new Application({
     backgroundColor: this.bg,
@@ -62,11 +62,11 @@ export class Mask {
   MASK: Graphics = new Graphics();
   FILTER: Filter;
 
-  constructor(private div: HTMLDivElement, mode: number, url: string) {
+  constructor(private div: HTMLDivElement, mode: number, url: string | null) {
+    this.FILTER = new Filter(null, fragment, { timeX: 0.0, timeY: 0.0 });
     this.config = modes[mode];
     this.image = url;
     this.div.appendChild(this.APP.view as HTMLCanvasElement);
-    this.FILTER = new Filter(null, fragment, { timeX: 0.0, timeY: 0.0 });
 
     this.APP.stage.addChild(this.GRAPHICS);
     this.APP.stage.addChild(this.CONTAINER);
@@ -188,10 +188,16 @@ export class Mask {
     this.offset = config.offset;
   }
 
-  set image(url: string) {
+  set image(url: string | null) {
     this.url = url;
-    this.TEXTURE = Texture.from(this.url);
-    this.SPRITE.texture = this.TEXTURE;
+    if(this.url) {
+      this.TEXTURE = Texture.from(this.url);
+      this.SPRITE.texture = this.TEXTURE;
+      this.FILTER.enabled = false
+    } else {
+      this.TEXTURE = Texture.from('/img.jpg');
+      this.SPRITE.texture = this.TEXTURE;
+    }
   }
 
   get delta() {
