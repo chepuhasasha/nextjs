@@ -76,17 +76,17 @@ export class Mask {
     this.CONTAINER.mask = this.MASK;
 
     this.APP.ticker.add(() => {
+      this.Resize();
       this.mouse = this.APP.renderer.plugins.interaction.mouse.global;
       this.FILTER.uniforms.timeX += this.delta.dx / 100;
       this.FILTER.uniforms.timeY += this.delta.dy / 100;
       this.FILTER.uniforms.mouse = this.mouse;
-      this.Resize();
       this.MASK.clear();
       this.GRAPHICS.clear();
       this.DrawLines();
       this.DrawShapes();
       this.DrawMasks();
-      this.SPRITE.position.set(this.delta.x / 2, this.delta.y / 2);
+      // this.SPRITE.position.set(this.delta.x / 2, this.delta.y / 2);
     });
   }
 
@@ -95,7 +95,7 @@ export class Mask {
     this.APP.screen.width = this.rect.width;
     this.APP.screen.height = this.rect.height;
     this.APP.view.width = this.rect.width;
-    this.APP.view.height = this.rect.height;
+    // this.APP.view.height = this.rect.height;
     this.CONTAINER.width = this.rect.width;
     this.CONTAINER.height = this.rect.height;
   }
@@ -190,12 +190,12 @@ export class Mask {
 
   set image(url: string | null) {
     this.url = url;
-    if(this.url) {
+    if (this.url) {
       this.TEXTURE = Texture.from(this.url);
       this.SPRITE.texture = this.TEXTURE;
-      this.FILTER.enabled = false
+      this.FILTER.enabled = false;
     } else {
-      this.TEXTURE = Texture.from('/img.jpg');
+      this.TEXTURE = Texture.from("/img.png");
       this.SPRITE.texture = this.TEXTURE;
     }
   }

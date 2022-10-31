@@ -5,5 +5,6 @@ export interface IBlockProps extends DetailedHTMLProps<HTMLAttributes<HTMLDivEle
   area?: string,
   justify?: CSSStyleDeclaration['justifyContent']
   align?: CSSStyleDeclaration['alignItems']
-  col?: boolean
+  col?: boolean,
+  padding?: string
 }
