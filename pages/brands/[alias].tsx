@@ -5,26 +5,31 @@ import { useRouter } from "next/router";
 import { ParsedUrlQuery } from "querystring";
 import { useEffect, useState } from "react";
 import { BrandAdminPreview } from "../../components/blocks";
+import { H1, P } from "../../components/elements";
+import { Block, Grid } from "../../components/wrappers";
+import { MainLayout } from "../../layouts/main/main";
 import { IBrandDB } from "../../models/brands";
 import { API } from "../../utils/api";
 
-export default function BrandPage({ brand }) {
+export default function BrandPage({ brand }: {brand: IBrandDB}) {
   return (
-    <div className="container">
-      <Head>
-        <title>{brand?.title}</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
-      <main>{brand && <BrandAdminPreview brand={brand} />}</main>
-
-      <footer></footer>
-    </div>
+    <MainLayout title={brand.title}>
+      <Grid rows="repeat(10, max-content)" cols="repeat(3, 1fr)">
+        <Block area='1/1/2/4' padding="0">
+          <img src={brand.baner} alt="" height={300}/>
+        </Block>
+        <Block area='2/1/3/4' padding="40px">
+            <H1>{brand.title}</H1>
+          <P>{brand.description}</P>
+          {/* {brand && <BrandAdminPreview brand={brand} />} */}
+        </Block>
+      </Grid>
+    </MainLayout>
   );
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const {data: brands} = await axios.post<IBrandDB[]>(
+  const { data: brands } = await axios.post<IBrandDB[]>(
     process.env.NEXT_PUBLIC_DOMAIN + "/api/brands",
     {}
   );
@@ -42,11 +47,11 @@ export const getStaticProps: GetStaticProps = async ({
       notFound: true,
     };
   }
-  const {data: brand} = await axios.post<IBrandDB[]>(
+  const { data: brand } = await axios.post<IBrandDB[]>(
     process.env.NEXT_PUBLIC_DOMAIN + "/api/brands",
-    {alias: params.alias}
+    { alias: params.alias }
   );
-  if(brand.length === 0) {
+  if (brand.length === 0) {
     return {
       notFound: true,
     };
