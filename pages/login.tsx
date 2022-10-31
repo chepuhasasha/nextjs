@@ -45,7 +45,7 @@ export default function LogIn() {
 
       <main className="container">
         <Grid rows="1fr" cols="1fr 400px 1fr">
-          <Block area="1/2/2/3">
+          <Block area="1/2/2/3" justify='center'>
             <Form title="Login" onSubmit={handleSubmit(onSubmit)}>
               <Input
                 label="Username"
