@@ -11,7 +11,6 @@ export const MainLayout = ({
 }: IMainLayoutProps): JSX.Element => {
   const links = [
     {name: 'SHOP', path: '/brands'},
-    {name: 'ABOUT', path: '/'},
   ]
 
   return (

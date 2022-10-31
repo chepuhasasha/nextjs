@@ -6,7 +6,8 @@ export const Footer = ({ ...props }: IFooterProps): JSX.Element => {
   return (
     <footer className={styles.footer} {...props}>
       <div className={styles.footer_left}>
-        <img src="/logo_min_light.svg" alt="logo" />
+        <img src="/footer_shape.svg" alt="shape" width={50} />
+        <img src="/logo_min_light.svg" alt="logo" width={200}/>
         <P>
           © QTB Korea LLC 2018 Gangnam-gu 311, 1206 Seoul, Republic of Korea{" "}
         </P>
