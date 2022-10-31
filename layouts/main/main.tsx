@@ -1,18 +1,17 @@
 import Head from "next/head";
-import styles from './admin.module.sass'
+import styles from './main.module.sass'
 import { FunctionComponent } from "react";
 import { Header } from "../../components/blocks/Header/Header";
-import { useUser } from "../../hooks";
-import { IAdminLayoutProps } from "./admin.props";
+import { IMainLayoutProps } from "./main.props";
+import { Footer } from "../../components/blocks/Footer/Footer";
 
-export const AdminLayout = ({
+export const MainLayout = ({
   children,
   title,
-}: IAdminLayoutProps): JSX.Element => {
-  const user = useUser("/login");
+}: IMainLayoutProps): JSX.Element => {
   const links = [
-    {name: 'Brands', path: '/admin/brands'},
-    {name: 'Products', path: '/admin/products'},
+    {name: 'SHOP', path: '/brands'},
+    {name: 'ABOUT', path: '/'},
   ]
 
   return (
@@ -22,24 +21,25 @@ export const AdminLayout = ({
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className={styles.admin}>
+      <main className={styles.main}>
         <Header links={links}/>
-        <div className={styles.admin_content}>
+        <div className={styles.main_content}>
           {children}
         </div>
       </main>
+      <Footer/>
     </>
   );
 };
 
-export const withAdminLayout = <T extends Record<string, unknown>>(
+export const withMainLayout = <T extends Record<string, unknown>>(
   Component: FunctionComponent<T>
 ) => {
   return function withLayoutComponent(props: T): JSX.Element {
     return (
-      <AdminLayout title='ADMIN'>
+      <MainLayout title='ADMIN'>
         <Component {...props} />
-      </AdminLayout>
+      </MainLayout>
     );
   };
 };

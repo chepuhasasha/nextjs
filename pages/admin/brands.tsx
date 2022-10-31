@@ -68,7 +68,7 @@ function Brands({ brands }: { brands: IBrandDB[] }) {
             {...restAlias}
           />
           <Textarea
-            rows="14"
+            rows="10"
             label="Description"
             placeholder="test"
             register={description}

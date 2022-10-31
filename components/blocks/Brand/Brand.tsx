@@ -21,21 +21,21 @@ export const BrandAdminPreview = ({
         <H3 style={{width: "100%"}}>
           {brand.title}
         </H3>
-        <Button appearance="danger"
-          onClick={deleteBrand}
-        >
-          Delete
-        </Button>
-        <Button
+        {/* <Button
           onClick={() => {
             Router.push(`/brands/${brand.alias}`);
           }}
         >
           Update
-        </Button>
+        </Button> */}
       </div>
       <P size="s">{brand.description}</P>
       <div className={styles.brand_admin_footer}>
+        <Button appearance="danger"
+          onClick={deleteBrand}
+        >
+          Delete
+        </Button>
         <Button
           onClick={() => {
             Router.push(`/brands/${brand.alias}`);
