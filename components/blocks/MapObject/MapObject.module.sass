@@ -1,0 +1,42 @@
+.mapobject
+	display: flex
+	flex-direction: column
+	border: 1px dashed var(--contrast-300)
+	&_body
+		display: flex
+		flex-direction: column
+		gap: 5px
+		overflow-y: auto
+		width: 100%
+		padding: 10px
+	label
+		margin: 10px 10px 0 10px
+	p:first-child
+		margin: 10px 10px 0 10px
+		cursor: pointer
+	input
+		display: none
+	&_item
+		display: flex
+		// align-items: center
+		flex-direction: column
+		gap: 10px
+		width: 100%
+		border-left: 5px solid var(--contrast-400)
+		padding: 10px
+		&:hover
+			background: var(--contrast-100)
+
+	&_btn
+		font: var(--font-200)
+		cursor: pointer
+		width: 100%
+		background: var(--contrast-500)
+		padding: 10px
+		border-radius: 2px
+		text-align: right
+		color: var(--contrast-200)
+		&:hover
+			background: var(--contrast-400)
+			
+

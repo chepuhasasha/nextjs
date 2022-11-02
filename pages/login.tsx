@@ -1,4 +1,5 @@
 import Head from "next/head";
+import Router from "next/router";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { Form } from "../components/blocks";
 import { H1, Input } from "../components/elements";
@@ -29,6 +30,7 @@ export default function LogIn() {
       },
       (res) => {
         console.log(res);
+        Router.push('/admin')
       },
       (err) => {
         console.log(err);

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { Input, Select, Textarea } from "../../components/elements";
-import { Form, PhotosInput } from "../../components/blocks";
+import { Form, MapObject, PhotosInput } from "../../components/blocks";
 import { API } from "../../utils/api";
 import { Block, Grid } from "../../components/wrappers";
 import axios from "axios";
@@ -87,6 +87,10 @@ function Products({
             register={brand}
             options={brands.map((b) => ({ name: b.title, value: b._id }))}
             {...restBrand}
+          />
+          <MapObject
+            label="ADD CHARACTERISTIC"
+            changeMap={(data) => console.log(data)}
           />
           <PhotosInput
             label="ADD BANER"
