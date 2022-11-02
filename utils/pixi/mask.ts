@@ -95,7 +95,7 @@ export class Mask {
     this.APP.screen.width = this.rect.width;
     this.APP.screen.height = this.rect.height;
     this.APP.view.width = this.rect.width;
-    // this.APP.view.height = this.rect.height;
+    this.APP.view.height = this.rect.height - 10;
     this.CONTAINER.width = this.rect.width;
     this.CONTAINER.height = this.rect.height;
   }

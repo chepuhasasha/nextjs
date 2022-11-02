@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { H1, H2, Input, Textarea } from "../../components/elements";
+import { H1, H2, Input, Select, Textarea } from "../../components/elements";
 import { FileImgInput, Form } from "../../components/blocks";
 import { useUser } from "../../hooks";
 import { API } from "../../utils/api";
@@ -10,8 +10,19 @@ import { GetStaticProps } from "next";
 import Router from "next/router";
 import { IProductDB } from "../../models/products";
 import { withAdminLayout } from "../../layouts/admin/admin";
+import { IBrandDB } from "../../models/brands";
+import { ProductCard } from "../../components/blocks/Product/Product";
+import { PhotosInput } from "../../components/blocks/PhotosInput/PhotosInput";
 
-function Products({ products }: { brands: IProductDB[] }) {
+function Products({
+  products,
+  brands,
+  images
+}: {
+  products: IProductDB[];
+  brands: IBrandDB[];
+  images: string[]
+}) {
   const {
     register,
     handleSubmit,
@@ -19,23 +30,29 @@ function Products({ products }: { brands: IProductDB[] }) {
   } = useForm<IProductDB>();
   const onSubmit: SubmitHandler<IProductDB> = (data) => newProduct(data);
   const { ref: title, ...restTitle } = register("title", { required: true });
+  const { ref: brand, ...restBrand } = register("brand_id", { required: true });
   const { ref: description, ...restDescription } = register("description", {
     required: true,
   });
-  const { ref: alias, ...restAlias } = register("alias", { required: true });
-  const [selectedLogo, setSelectedLogo] = useState<string | null>(null);
-  const [selectedBaner, setSelectedBaner] = useState<string | null>(null);
+  const [baner, setBaner] = useState<string | null>(null);
+  // const [images, setImages] = useState<string[]>([]);
+
+  const addPhoto = (image: string[]) => {
+    // setImages([...images]);
+    console.log(image)
+  };
 
   const newProduct = (data: IProductDB) => {
-    if (!selectedLogo && !selectedBaner) {
-      alert("select logo");
-      return;
-    }
+    // if (!baner) {
+    //   alert("select baner");
+    //   return;
+    // }
+    console.log(data, images);
     API.products.create(
       {
         ...data,
-        logo: selectedLogo,
-        baner: selectedBaner,
+        baner,
+        images
       },
       (res) => {
         console.log(res);
@@ -55,18 +72,28 @@ function Products({ products }: { brands: IProductDB[] }) {
           description="create new product"
           onSubmit={handleSubmit(onSubmit)}
         >
+          <Select
+            error={errors.title && "required field"}
+            label="Brand"
+            placeholder="brand"
+            register={brand}
+            options={brands.map((b) => ({ name: b.title, value: b._id }))}
+            {...restBrand}
+          />
+          <Select
+            error={errors.title && "required field"}
+            label="Brand"
+            placeholder="brand"
+            register={brand}
+            options={images.map((i) => ({ name: i, value: i }))}
+            {...restBrand}
+          />
           <Input
             error={errors.title && "required field"}
             label="Title"
             placeholder="test"
             register={title}
             {...restTitle}
-          />
-          <Input
-            label="Alias"
-            placeholder="test"
-            register={alias}
-            {...restAlias}
           />
           <Textarea
             rows="14"
@@ -76,17 +103,22 @@ function Products({ products }: { brands: IProductDB[] }) {
             {...restDescription}
           />
           <FileImgInput
-            text="Add logo..."
-            onFileSelect={(file) => setSelectedLogo(file)}
-          />
-          <FileImgInput
             text="Add baner..."
-            onFileSelect={(file) => setSelectedBaner(file)}
+            onFileSelect={(file) => setBaner(file)}
+          />
+          <PhotosInput
+            label="ADD PHOTOS"
+            text="1000X1000 px"
+            onFileLoad={(file) => addPhoto(file)}
           />
         </Form>
       </Block>
       <Grid rows="auto" cols="1fr" area="1/1/5/4">
-        {/* {products && products.map((product) => (<BrandAdminPreview key={product._id} product={brand} />))} */}
+        <pre>{JSON.stringify(brands, null, 2)}</pre>
+        {products &&
+          products.map((product) => (
+            <ProductCard key={product._id} product={product} />
+          ))}
       </Grid>
     </Grid>
   );
@@ -99,10 +131,20 @@ export const getStaticProps: GetStaticProps = async () => {
     process.env.NEXT_PUBLIC_DOMAIN + "/api/products",
     {}
   );
+  const { data: brands } = await axios.post<IBrandDB[]>(
+    process.env.NEXT_PUBLIC_DOMAIN + "/api/brands",
+    {}
+  );
+  const { data: images } = await axios.get<string[]>(
+    process.env.NEXT_PUBLIC_DOMAIN + "/api/images",
+    {}
+  );
 
   return {
     props: {
       products,
+      brands,
+      images
     },
   };
 };

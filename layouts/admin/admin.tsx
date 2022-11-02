@@ -11,8 +11,9 @@ export const AdminLayout = ({
 }: IAdminLayoutProps): JSX.Element => {
   const user = useUser("/login");
   const links = [
-    {name: 'Brands', path: '/admin/brands'},
-    {name: 'Products', path: '/admin/products'},
+    {name: 'BRANDS', path: '/admin/brands'},
+    {name: 'PRODUCTS', path: '/admin/products'},
+    {name: 'IMAGES', path: '/admin/images'},
   ]
 
   return (

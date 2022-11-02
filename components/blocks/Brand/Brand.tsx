@@ -19,7 +19,7 @@ export const BrandAdminPreview = ({
       <div className={styles.brand_admin_head}>
         <img src={brand.logo} alt="" />
         <H3 style={{width: "100%"}}>
-          {brand.title}
+          {brand.title} : {brand._id}
         </H3>
         {/* <Button
           onClick={() => {

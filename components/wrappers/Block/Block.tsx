@@ -10,6 +10,7 @@ export const Block = ({
   align,
   col = true,
   padding = '20px',
+  gap = 10,
   ...props
 }: IBlockProps): JSX.Element => {
   const style: CSSProperties = {
@@ -17,7 +18,8 @@ export const Block = ({
     alignItems: align ? align : "none",
     flexDirection: col ? "column" : "row",
     gridArea: area ? area : "none",
-    padding: padding
+    padding: padding,
+    gap: gap
   };
   return (
     <div className={styles.block} {...props} style={style}>

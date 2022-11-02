@@ -7,4 +7,5 @@ export interface IBlockProps extends DetailedHTMLProps<HTMLAttributes<HTMLDivEle
   align?: CSSStyleDeclaration['alignItems']
   col?: boolean,
   padding?: string
+  gap?: number
 }

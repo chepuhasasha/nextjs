@@ -172,6 +172,13 @@ export class API {
       });
   }
 
+  static async loadImage(exp: string, data: string) {
+    return await this.axios.post('/images', {
+      data,
+      exp
+    })
+  }
+
   static brands: CollectionMethods<IBrand, IBrandDB> = {
     create: async (data, cb, errcb?) => {
       await this.create<IBrand, IBrandDB>("brands", data, cb, errcb);
