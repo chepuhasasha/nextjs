@@ -10,7 +10,7 @@ export const ProductCard = ({
 }: IProductProps): JSX.Element => {
   return (
     <div className={styles.product} {...props}>
-      <pre>{JSON.stringify(product)}</pre>
+      <pre>{JSON.stringify(product, null, 2)}</pre>
     </div>
   );
 };

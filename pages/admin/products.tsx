@@ -34,6 +34,8 @@ function Products({
   });
   const [baner, setBaner] = useState<string | null>(null);
   const [photos, setPhotos] = useState<string[]>([]);
+  const [characteristics, setCharacteristics] = useState<Record<string, string>>({});
+  const [buy_links, setBuyLinks] = useState<Record<string, string>>({});
 
 
   const newProduct = (data: IProductDB) => {
@@ -46,7 +48,10 @@ function Products({
       {
         ...data,
         baner,
-        images
+        images: photos,
+        characteristics,
+        buy_links
+
       },
       (res) => {
         console.log(res);
@@ -90,7 +95,11 @@ function Products({
           />
           <MapObject
             label="ADD CHARACTERISTIC"
-            changeMap={(data) => console.log(data)}
+            changeMap={(data) => setCharacteristics(data)}
+          />
+          <MapObject
+            label="ADD LINKS"
+            changeMap={(data) => setBuyLinks(data)}
           />
           <PhotosInput
             label="ADD BANER"

@@ -14,8 +14,13 @@
 	p:first-child
 		margin: 10px 10px 0 10px
 		cursor: pointer
-	input
-		display: none
+	input, textarea
+		padding-bottom: 10px
+		outline: none
+		border: none
+		background: none
+		border-bottom: 1px dashed var(--contrast-300)
+
 	&_item
 		display: flex
 		// align-items: center
@@ -26,6 +31,9 @@
 		padding: 10px
 		&:hover
 			background: var(--contrast-100)
+		span:last-child
+			cursor: pointer
+			color: var(--ui-error)
 
 	&_btn
 		font: var(--font-200)
