@@ -1,10 +1,11 @@
 .photosinput
 	display: flex
 	flex-direction: column
-	gap: 10px
-	background: var(--contrast-500)
-	padding: 10px
-	border-radius: 4px
+	// gap: 10px
+	// padding: 10px
+	// border-radius: 4px
+	border: 1px dashed var(--contrast-300)
+		
 
 	&_body
 		display: flex
@@ -12,24 +13,35 @@
 		gap: 5px
 		overflow-y: auto
 		width: 100%
+		padding: 10px
 	label
-		color: var(--contrast-300)
-		font: var(--font-200)
-	span
+		margin: 10px 10px 0 10px
+		// color: var(--contrast-300)
+		// font: var(--font-200)
+	p
+		margin: 10px 10px 0 10px
 		cursor: pointer
 	input
 		display: none
 	&_item
 		display: flex
-		justify-content: space-between
+		// justify-content: space-between
 		align-items: center
+		gap: 10px
 		width: 100%
 		border-left: 5px solid var(--contrast-400)
-		padding: 10px
+		padding: 0 10px
+		&:hover
+			background: var(--contrast-100)
+		img
+			width: 40px
+			height: 40px
+			border: 1px dashed var(--contrast-300)
 		span
 			font: var(--font-300)
-			&:first-child
-				color: var(--contrast-300)
+			&:nth-child(2n)
+				width: 100%
+				color: var(--contrast-400)
 			&:last-child
 				cursor: pointer
 				color: var(--ui-error)
@@ -43,7 +55,6 @@
 		text-align: right
 		color: var(--contrast-200)
 		&:hover
-			color: var(--contrast-400)
-			background: var(--contrast-200)
+			background: var(--contrast-400)
 			
 

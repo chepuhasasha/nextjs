@@ -178,6 +178,10 @@ export class API {
       exp
     })
   }
+  
+  static async deleteImage(name: string) {
+    return await this.axios.delete('/images', {data: {name}})
+  }
 
   static brands: CollectionMethods<IBrand, IBrandDB> = {
     create: async (data, cb, errcb?) => {

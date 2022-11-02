@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useForm, SubmitHandler } from "react-hook-form";
+import { useForm, SubmitHandler, set } from "react-hook-form";
 import { H1, H2, Input, Select, Textarea } from "../../components/elements";
 import { FileImgInput, Form } from "../../components/blocks";
 import { useUser } from "../../hooks";
@@ -35,12 +35,8 @@ function Products({
     required: true,
   });
   const [baner, setBaner] = useState<string | null>(null);
-  // const [images, setImages] = useState<string[]>([]);
+  const [photos, setPhotos] = useState<string[]>([]);
 
-  const addPhoto = (image: string[]) => {
-    // setImages([...images]);
-    console.log(image)
-  };
 
   const newProduct = (data: IProductDB) => {
     // if (!baner) {
@@ -66,12 +62,26 @@ function Products({
 
   return (
     <Grid rows="repeat(4, 1fr)" cols="repeat(3, 1fr) 400px">
-      <Block area="1/4/5/5">
+      <Block area="1/3/5/5">
         <Form
           title="NEW PRODUCT"
           description="create new product"
           onSubmit={handleSubmit(onSubmit)}
         >
+          <Input
+            error={errors.title && "required field"}
+            label="Title"
+            placeholder="some product title ..."
+            register={title}
+            {...restTitle}
+          />
+          <Textarea
+            rows="15"
+            label="Description"
+            placeholder="test"
+            register={description}
+            {...restDescription}
+          />
           <Select
             error={errors.title && "required field"}
             label="Brand"
@@ -80,40 +90,20 @@ function Products({
             options={brands.map((b) => ({ name: b.title, value: b._id }))}
             {...restBrand}
           />
-          <Select
-            error={errors.title && "required field"}
-            label="Brand"
-            placeholder="brand"
-            register={brand}
-            options={images.map((i) => ({ name: i, value: i }))}
-            {...restBrand}
-          />
-          <Input
-            error={errors.title && "required field"}
-            label="Title"
-            placeholder="test"
-            register={title}
-            {...restTitle}
-          />
-          <Textarea
-            rows="14"
-            label="Description"
-            placeholder="test"
-            register={description}
-            {...restDescription}
-          />
-          <FileImgInput
-            text="Add baner..."
-            onFileSelect={(file) => setBaner(file)}
+          <PhotosInput
+            label="ADD BANER"
+            text="1000X1000 px"
+            onFileLoad={(files) => setBaner(files[0])}
           />
           <PhotosInput
             label="ADD PHOTOS"
+            multy={true}
             text="1000X1000 px"
-            onFileLoad={(file) => addPhoto(file)}
+            onFileLoad={(files) => setPhotos(files)}
           />
         </Form>
       </Block>
-      <Grid rows="auto" cols="1fr" area="1/1/5/4">
+      <Grid rows="auto" cols="1fr" area="1/1/5/3">
         <pre>{JSON.stringify(brands, null, 2)}</pre>
         {products &&
           products.map((product) => (

@@ -35,6 +35,14 @@ export default async function handler(
         return res.json({ message: "bad request", error: true });
       }
     }
+
+
+    case "DELETE": {
+      await fs.unlink(
+        path.resolve(__dirname, `../../../../public/${req.body.name}`)
+      )
+      return res.json({name: req.body.name});
+    }
     
     case "GET": {
       const result = await fs.readdir(

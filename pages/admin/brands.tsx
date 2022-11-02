@@ -9,6 +9,7 @@ import axios from "axios";
 import { GetStaticProps } from "next";
 import Router from "next/router";
 import { withAdminLayout } from "../../layouts/admin/admin";
+import { PhotosInput } from "../../components/blocks/PhotosInput/PhotosInput";
 
 function Brands({ brands }: { brands: IBrandDB[] }) {
   const {
@@ -26,6 +27,7 @@ function Brands({ brands }: { brands: IBrandDB[] }) {
   const [selectedBaner, setSelectedBaner] = useState<string | null>(null);
 
   const newBrand = (data: IBrand) => {
+    console.log(selectedLogo)
     if (!selectedLogo && !selectedBaner) {
       alert("select logo");
       return;
@@ -48,7 +50,7 @@ function Brands({ brands }: { brands: IBrandDB[] }) {
 
   return (
     <Grid rows="repeat(4, 1fr)" cols="repeat(3, 1fr) 400px">
-      <Block area="1/4/5/5">
+      <Block area="1/3/5/5">
         <Form
           title="NEW BRAND"
           description="create new brand"
@@ -57,34 +59,36 @@ function Brands({ brands }: { brands: IBrandDB[] }) {
           <Input
             error={errors.title && "required field"}
             label="Title"
-            placeholder="test"
+            placeholder="some product name ..."
             register={title}
             {...restTitle}
           />
           <Input
             label="Alias"
-            placeholder="test"
+            placeholder="like: vue_de_pulang"
             register={alias}
             {...restAlias}
           />
           <Textarea
-            rows="10"
+            rows="19"
             label="Description"
             placeholder="test"
             register={description}
             {...restDescription}
           />
-          <FileImgInput
-            text="Add logo..."
-            onFileSelect={(file) => setSelectedLogo(file)}
+          <PhotosInput
+            label="ADD LOGO"
+            text="1000X1000 px"
+            onFileLoad={(file) => setSelectedLogo(file[0])}
           />
-          <FileImgInput
-            text="Add baner..."
-            onFileSelect={(file) => setSelectedBaner(file)}
-            />
+          <PhotosInput
+            label="ADD BANER"
+            text="1000X1000 px"
+            onFileLoad={(file) => setSelectedBaner(file[0])}
+          />
         </Form>
       </Block>
-      <Grid rows="auto" cols="1fr" area="1/1/5/4">
+      <Grid rows="auto" cols="1fr" area="1/1/5/3">
         {brands &&
           brands.map((brand) => (
             <BrandAdminPreview key={brand._id} brand={brand} />

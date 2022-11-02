@@ -13,7 +13,6 @@ export const AdminLayout = ({
   const links = [
     {name: 'BRANDS', path: '/admin/brands'},
     {name: 'PRODUCTS', path: '/admin/products'},
-    {name: 'IMAGES', path: '/admin/images'},
   ]
 
   return (
