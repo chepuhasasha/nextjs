@@ -1,8 +1,7 @@
 import { useState } from "react";
-import { useForm, SubmitHandler, set } from "react-hook-form";
-import { H1, H2, Input, Select, Textarea } from "../../components/elements";
-import { FileImgInput, Form } from "../../components/blocks";
-import { useUser } from "../../hooks";
+import { useForm, SubmitHandler } from "react-hook-form";
+import { Input, Select, Textarea } from "../../components/elements";
+import { Form, PhotosInput } from "../../components/blocks";
 import { API } from "../../utils/api";
 import { Block, Grid } from "../../components/wrappers";
 import axios from "axios";
@@ -12,7 +11,6 @@ import { IProductDB } from "../../models/products";
 import { withAdminLayout } from "../../layouts/admin/admin";
 import { IBrandDB } from "../../models/brands";
 import { ProductCard } from "../../components/blocks/Product/Product";
-import { PhotosInput } from "../../components/blocks/PhotosInput/PhotosInput";
 
 function Products({
   products,

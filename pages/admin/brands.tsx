@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useForm, SubmitHandler, UseFormRegisterReturn } from "react-hook-form";
 import { H1, H2, Input, Textarea } from "../../components/elements";
-import { BrandAdminPreview, FileImgInput, Form } from "../../components/blocks";
+import { BrandAdminPreview, Form, PhotosInput } from "../../components/blocks";
 import { IBrandDB, IBrand } from "../../models/brands";
 import { API } from "../../utils/api";
 import { Block, Grid } from "../../components/wrappers";
@@ -9,7 +9,6 @@ import axios from "axios";
 import { GetStaticProps } from "next";
 import Router from "next/router";
 import { withAdminLayout } from "../../layouts/admin/admin";
-import { PhotosInput } from "../../components/blocks/PhotosInput/PhotosInput";
 
 function Brands({ brands }: { brands: IBrandDB[] }) {
   const {
