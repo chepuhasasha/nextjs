@@ -115,7 +115,6 @@ function Products({
         </Form>
       </Block>
       <Grid rows="auto" cols="1fr" area="1/1/5/3">
-        <pre>{JSON.stringify(brands, null, 2)}</pre>
         {products &&
           products.map((product) => (
             <ProductCard key={product._id} product={product} />
