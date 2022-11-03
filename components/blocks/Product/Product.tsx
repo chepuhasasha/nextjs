@@ -1,7 +1,4 @@
-import Router from "next/router";
-import { API } from "../../../utils/api";
-import { Button, H3, P } from "../../elements";
-import { Block } from "../../wrappers";
+import { P } from "../../elements";
 import styles from "./Product.module.sass";
 import type { IProductProps } from "./Product.props";
 

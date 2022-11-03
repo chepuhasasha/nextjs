@@ -1,6 +1,6 @@
-import { useEffect, useRef, useState } from "react";
-import { useForm, SubmitHandler, UseFormRegisterReturn } from "react-hook-form";
-import { H1, H2, Input, Textarea } from "../../components/elements";
+import { useState } from "react";
+import { useForm, SubmitHandler } from "react-hook-form";
+import { Input, Textarea } from "../../components/elements";
 import { BrandAdminPreview, Form, PhotosInput } from "../../components/blocks";
 import { IBrandDB, IBrand } from "../../models/brands";
 import { API } from "../../utils/api";
@@ -26,25 +26,26 @@ function Brands({ brands }: { brands: IBrandDB[] }) {
   const [selectedBaner, setSelectedBaner] = useState<string | null>(null);
 
   const newBrand = (data: IBrand) => {
-    console.log(selectedLogo)
+    console.log(selectedLogo);
     if (!selectedLogo && !selectedBaner) {
       alert("select logo");
       return;
+    } else {
+      API.brands.create(
+        {
+          ...data,
+          logo: selectedLogo as string,
+          baner: selectedBaner as string,
+        },
+        (res) => {
+          console.log(res);
+          Router.reload();
+        },
+        (err) => {
+          console.log(err);
+        }
+      );
     }
-    API.brands.create(
-      {
-        ...data,
-        logo: selectedLogo,
-        baner: selectedBaner,
-      },
-      (res) => {
-        console.log(res);
-        Router.reload();
-      },
-      (err) => {
-        console.log(err);
-      }
-    );
   };
 
   return (
@@ -54,7 +55,7 @@ function Brands({ brands }: { brands: IBrandDB[] }) {
           title="NEW BRAND"
           description="create new brand"
           onSubmit={handleSubmit(onSubmit)}
-          >
+        >
           <Input
             error={errors.title && "required field"}
             label="Title"
@@ -69,7 +70,7 @@ function Brands({ brands }: { brands: IBrandDB[] }) {
             {...restAlias}
           />
           <Textarea
-            rows="19"
+            rows={19}
             label="Description"
             placeholder="test"
             register={description}
@@ -91,7 +92,7 @@ function Brands({ brands }: { brands: IBrandDB[] }) {
         {brands &&
           brands.map((brand) => (
             <BrandAdminPreview key={brand._id} brand={brand} />
-            ))}
+          ))}
       </Grid>
     </Grid>
   );
@@ -99,9 +100,13 @@ function Brands({ brands }: { brands: IBrandDB[] }) {
 
 export default withAdminLayout(Brands);
 
+const domain =
+  process.env.NODE_ENV === "development"
+    ? process.env.NEXT_PUBLIC_DEV_DOMAIN
+    : process.env.NEXT_PUBLIC_DOMAIN;
 export const getStaticProps: GetStaticProps = async () => {
   const { data: brands } = await axios.post<IBrandDB[]>(
-    process.env.NEXT_PUBLIC_DOMAIN + "/api/brands",
+    domain + "/api/brands",
     {}
   );
 

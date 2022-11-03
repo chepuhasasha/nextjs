@@ -4,7 +4,7 @@ import { sign } from "jsonwebtoken";
 import { serialize } from "cookie";
 import crypto from "crypto";
 
-const secret = process.env.NEXTAUTH_SECRET;
+const secret = process.env.NODE_ENV === "development" ? process.env.NEXT_AUTH_DEV_SECRET : process.env.NEXT_AUTH_SECRET;
 
 export function validatePassword(user: IUser, inputPassword) {
   const inputHash = crypto

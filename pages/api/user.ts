@@ -2,7 +2,7 @@ import connectMongo from "../../utils/db/mongoose";
 import { Users } from "../../models/users";
 import { verify } from "jsonwebtoken";
 
-const secret = process.env.NEXTAUTH_SECRET;
+const secret = process.env.NODE_ENV === "development" ? process.env.NEXT_AUTH_DEV_SECRET : process.env.NEXT_AUTH_SECRET;
 
 export default async function handler(req, res) {
   await connectMongo();

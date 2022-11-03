@@ -39,28 +39,28 @@ function Products({
 
 
   const newProduct = (data: IProductDB) => {
-    // if (!baner) {
-    //   alert("select baner");
-    //   return;
-    // }
-    console.log(data, images);
-    API.products.create(
-      {
-        ...data,
-        baner,
-        images: photos,
-        characteristics,
-        buy_links
-
-      },
-      (res) => {
-        console.log(res);
-        Router.reload();
-      },
-      (err) => {
-        console.log(err);
-      }
-    );
+    if (!baner && photos.length == 0) {
+      alert("select baner");
+      return;
+    } else {
+      API.products.create(
+        {
+          ...data,
+          baner: baner as string,
+          images: photos,
+          characteristics,
+          buy_links
+  
+        },
+        (res) => {
+          console.log(res);
+          Router.reload();
+        },
+        (err) => {
+          console.log(err);
+        }
+      );
+    }
   };
 
   return (
@@ -79,7 +79,7 @@ function Products({
             {...restTitle}
           />
           <Textarea
-            rows="15"
+            rows={15}
             label="Description"
             placeholder="test"
             register={description}
@@ -125,18 +125,22 @@ function Products({
 }
 
 export default withAdminLayout(Products);
+const domain =
+  process.env.NODE_ENV === "development"
+    ? process.env.NEXT_PUBLIC_DEV_DOMAIN
+    : process.env.NEXT_PUBLIC_DOMAIN;
 
 export const getStaticProps: GetStaticProps = async () => {
   const { data: products } = await axios.post<IProductDB[]>(
-    process.env.NEXT_PUBLIC_DOMAIN + "/api/products",
+    domain+ "/api/products",
     {}
   );
   const { data: brands } = await axios.post<IBrandDB[]>(
-    process.env.NEXT_PUBLIC_DOMAIN + "/api/brands",
+    domain+ "/api/brands",
     {}
   );
   const { data: images } = await axios.get<string[]>(
-    process.env.NEXT_PUBLIC_DOMAIN + "/api/images",
+    domain + "/api/images",
     {}
   );
 

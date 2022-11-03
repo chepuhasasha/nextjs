@@ -19,15 +19,15 @@ export const PhotosInput = ({
       const file = e.target.files[0];
       const reader = new FileReader();
       reader.readAsBinaryString(file);
-      reader.onload = (r) => {
-        if (r.currentTarget) {
+      reader.onload = () => {
+        if (reader.result) {
           API.loadImage(
             file.name.split(".").pop() as string,
-            r.currentTarget.result as string
+            reader.result as string
           ).then((data) => {
             console.log(data.data);
             setImages([...images, data.data.message]);
-            onFileLoad([...images, data.data.message])
+            onFileLoad([...images, data.data.message]);
           });
         }
       };
@@ -56,12 +56,16 @@ export const PhotosInput = ({
           </div>
         ))}
       </div>
-      {multy || images.length === 0 ? (<div
-        className={styles.photosinput_btn}
-        onClick={() => input.current && input.current.click()}
-      >
-        add...
-      </div>) : ''}
+      {multy || images.length === 0 ? (
+        <div
+          className={styles.photosinput_btn}
+          onClick={() => input.current && input.current.click()}
+        >
+          add...
+        </div>
+      ) : (
+        ""
+      )}
       <input
         {...props}
         name="img"

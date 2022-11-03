@@ -1,7 +1,6 @@
-import { DetailedHTMLProps, HTMLAttributes } from "react";
 import { RefCallBack } from "react-hook-form";
 
-export interface IInputProps extends DetailedHTMLProps<HTMLAttributes<HTMLInputElement>, HTMLInputElement>{
+export interface IInputProps extends React.InputHTMLAttributes<HTMLInputElement>{
   appearance?: 'primary' | 'ghost'
   register: RefCallBack
   label: string

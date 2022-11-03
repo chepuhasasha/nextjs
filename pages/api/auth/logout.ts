@@ -1,12 +1,12 @@
 import { serialize } from "cookie";
 
 export default async function handler(req, res) {
-  const { cookies } = req
+  const { cookies } = req;
 
-  const jwt = cookies.JWT
+  const jwt = cookies.JWT;
 
-  if(!jwt) {
-    return res.json({message: "Hey! You are already not logged in..."})
+  if (!jwt) {
+    return res.json({ message: "Hey! You are already not logged in..." });
   } else {
     const serialized = serialize("JWT", "", {
       httpOnly: true,

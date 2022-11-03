@@ -1,4 +1,4 @@
-import { Users } from "../../models/users";
+import { IUser, Users } from "../../models/users";
 import connectMongo from "../../utils/db/mongoose";
 import crypto from "crypto";
 

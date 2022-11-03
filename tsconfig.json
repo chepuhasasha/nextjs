@@ -24,6 +24,7 @@
   "include": [
     "next-env-custom.d.ts",
     "images.d.ts",
+    "env.d.ts",
     "**/*.ts",
     "**/*.tsx"
   ],

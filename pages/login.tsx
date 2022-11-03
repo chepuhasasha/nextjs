@@ -2,7 +2,7 @@ import Head from "next/head";
 import Router from "next/router";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { Form } from "../components/blocks";
-import { H1, Input } from "../components/elements";
+import { Input } from "../components/elements";
 import { Block, Grid } from "../components/wrappers";
 import { API } from "../utils/api";
 
@@ -15,7 +15,7 @@ export default function LogIn() {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    // formState: { errors },
   } = useForm<UserForm>();
   const { ref: username, ...restUsername } = register("username", {
     required: true,
@@ -30,7 +30,7 @@ export default function LogIn() {
       },
       (res) => {
         console.log(res);
-        Router.push('/admin')
+        Router.push("/admin");
       },
       (err) => {
         console.log(err);
@@ -47,7 +47,7 @@ export default function LogIn() {
 
       <main className="container">
         <Grid rows="1fr" cols="1fr 400px 1fr">
-          <Block area="1/2/2/3" justify='center'>
+          <Block area="1/2/2/3" justify="center">
             <Form title="Login" onSubmit={handleSubmit(onSubmit)}>
               <Input
                 label="Username"
@@ -57,7 +57,7 @@ export default function LogIn() {
               />
               <Input
                 label="Password"
-                type='password'
+                type="password"
                 placeholder="test"
                 register={password}
                 {...restPassword}

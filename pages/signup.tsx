@@ -3,12 +3,16 @@ import { H1 } from "../components/elements";
 import { API } from "../utils/api";
 
 type UserForm = {
-  username: string,
-  password: string
-}
+  username: string;
+  password: string;
+};
 
 export default function SignUp() {
-  const { register, handleSubmit, formState: { errors } } = useForm<UserForm>();
+  const {
+    register,
+    handleSubmit,
+    // formState: { errors },
+  } = useForm<UserForm>();
   const onSubmit: SubmitHandler<UserForm> = (data: UserForm) => {
     API.signup(
       {
@@ -21,15 +25,21 @@ export default function SignUp() {
         console.log(err);
       }
     );
-  }
+  };
 
   return (
     <>
       <H1>SIGN UP</H1>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <input placeholder="username" {...register("username", { required: true })} />
-        <input placeholder="password" {...register("password", { required: true })} />
-        
+        <input
+          placeholder="username"
+          {...register("username", { required: true })}
+        />
+        <input
+          placeholder="password"
+          {...register("password", { required: true })}
+        />
+
         <input type="submit" />
       </form>
     </>

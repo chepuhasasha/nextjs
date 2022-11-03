@@ -1,6 +1,5 @@
-import { ChangeEvent, ChangeEventHandler, useRef, useState } from "react";
-import { API } from "../../../utils/api";
-import { Input, P } from "../../elements";
+import { ChangeEvent, useState } from "react";
+import { P } from "../../elements";
 import styles from "./MapObject.module.sass";
 import { IMapObjectProps } from "./MapObject.props";
 
@@ -13,11 +12,11 @@ export const MapObject = ({
   const [name, setName] = useState({ value: "" });
   const [value, setValue] = useState({ value: "" });
 
-  const handleChangeValue = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleChangeValue = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setValue({ value: e.target.value });
   };
 
-  const handleChangeName = (e: ChangeEvent<HTMLTextAreaElement>) => {
+  const handleChangeName = (e: ChangeEvent<HTMLInputElement>) => {
     setName({ value: e.target.value });
   };
 
@@ -37,7 +36,7 @@ export const MapObject = ({
   };
 
   return (
-    <div className={styles.mapobject}>
+    <div className={styles.mapobject} {...props}>
       <label>{label}</label>
       {Object.keys(mapobject).length > 0 && (
         <div className={styles.mapobject_body}>
@@ -58,7 +57,6 @@ export const MapObject = ({
           onChange={handleChangeName}
         />
         <textarea
-          type="text"
           placeholder="text"
           value={value.value}
           onChange={handleChangeValue}

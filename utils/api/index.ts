@@ -1,9 +1,9 @@
 import axios, { AxiosError } from "axios";
 import {} from "mongoose";
-import { IBrand, IBrandDB } from "../models/brands";
-import { IProduct, IProductDB } from "../models/products";
-import { IProductsList, IProductsListDB } from "../models/productsList";
-import { IUserDB } from "../models/users";
+import { IBrand, IBrandDB } from "../../models/brands";
+import { IProduct, IProductDB } from "../../models/products";
+import { IProductsList, IProductsListDB } from "../../models/productsList";
+import { IUserDB } from "../../models/users";
 
 export type CollectionName = "brands" | "products" | "products_lists";
 
@@ -37,16 +37,23 @@ export interface CollectionMethods<T, K> {
   ) => void;
 }
 
+const domain =
+  process.env.NODE_ENV === "development"
+    ? process.env.NEXT_PUBLIC_DEV_DOMAIN
+    : process.env.NEXT_PUBLIC_DOMAIN;
+
+
 export class API {
   static axios = axios.create({
-    baseURL: `${process.env.NEXT_PUBLIC_DOMAIN}/api`,
+    baseURL: `${domain}/api`,
   });
 
   static async user(
     cb: (data: IUserDB) => void,
-    errcb?: (error: AxiosError) => void){
+    errcb?: (error: AxiosError) => void
+  ) {
     await this.axios
-      .get('user')
+      .get("user")
       .then((res) => {
         cb(res.data);
       })
@@ -55,12 +62,13 @@ export class API {
       });
   }
 
-  static async signup (
-    data: {username: string, password: string},  
+  static async signup(
+    data: { username: string; password: string },
     cb: (data: IUserDB) => void,
-    errcb?: (error: AxiosError) => void){
+    errcb?: (error: AxiosError) => void
+  ) {
     await this.axios
-      .post('signup', data)
+      .post("signup", data)
       .then((res) => {
         cb(res.data);
       })
@@ -70,11 +78,12 @@ export class API {
   }
 
   static async login(
-    data: {username: string, password: string},  
+    data: { username: string; password: string },
     cb: (data: IUserDB) => void,
-    errcb?: (error: AxiosError) => void){
+    errcb?: (error: AxiosError) => void
+  ) {
     await this.axios
-      .post('auth/login', data)
+      .post("auth/login", data)
       .then((res) => {
         cb(res.data);
       })
@@ -84,10 +93,11 @@ export class API {
   }
 
   static async logout(
-    cb: (data: { message: string}) => void,
-    errcb?: (error: AxiosError) => void){
+    cb: (data: { message: string }) => void,
+    errcb?: (error: AxiosError) => void
+  ) {
     await this.axios
-      .get('auth/logout')
+      .get("auth/logout")
       .then((res) => {
         cb(res.data);
       })
@@ -150,17 +160,17 @@ export class API {
       });
   }
 
-  static async update<T>(
+  static async update<T, B>(
     collection: CollectionName,
     condition: {
       [K in keyof T]?: T[K];
     },
     data: T,
-    cb: (data: T) => void,
+    cb: (data: B) => void,
     errcb?: (error: AxiosError) => void
   ) {
     await this.axios
-      .patch<T>(collection, {
+      .patch<B>(collection, {
         condition,
         data,
       })
@@ -173,14 +183,14 @@ export class API {
   }
 
   static async loadImage(exp: string, data: string) {
-    return await this.axios.post('/images', {
+    return await this.axios.post("/images", {
       data,
-      exp
-    })
+      exp,
+    });
   }
-  
+
   static async deleteImage(name: string) {
-    return await this.axios.delete('/images', {data: {name}})
+    return await this.axios.delete("/images", { data: { name } });
   }
 
   static brands: CollectionMethods<IBrand, IBrandDB> = {
@@ -197,7 +207,7 @@ export class API {
     },
 
     update: async (condition, data, cb, errcb?) => {
-      await this.update<IBrand>("brands", condition, data, cb, errcb);
+      await this.update<IBrand, IBrandDB>("brands", condition, data, cb, errcb);
     },
   };
 
@@ -215,7 +225,13 @@ export class API {
     },
 
     update: async (condition, data, cb, errcb?) => {
-      await this.update<IProduct>("products", condition, data, cb, errcb);
+      await this.update<IProduct, IProductDB>(
+        "products",
+        condition,
+        data,
+        cb,
+        errcb
+      );
     },
   };
 
@@ -243,7 +259,7 @@ export class API {
     },
 
     update: async (condition, data, cb, errcb?) => {
-      await this.update<IProductsList>(
+      await this.update<IProductsList, IProductsListDB>(
         "products_lists",
         condition,
         data,

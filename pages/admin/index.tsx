@@ -1,5 +1,4 @@
 import Router from "next/router";
-import Head from "next/head";
 import { Button } from "../../components/elements";
 import { Block } from "../../components/wrappers";
 import { withAdminLayout } from "../../layouts/admin/admin";
