@@ -3,7 +3,6 @@ import {
   Container,
   Filter,
   Graphics,
-  ICanvas,
   Sprite,
   Texture,
 } from "pixi.js";
@@ -63,7 +62,7 @@ export class Mask {
   FILTER: Filter;
 
   constructor(private div: HTMLDivElement, mode: number, url: string | null) {
-    this.FILTER = new Filter(null, fragment, { timeX: 0.0, timeY: 0.0 });
+    this.FILTER = new Filter(undefined, fragment, { timeX: 0.0, timeY: 0.0 });
     this.config = modes[mode];
     this.image = url;
     this.div.appendChild(this.APP.view as HTMLCanvasElement);

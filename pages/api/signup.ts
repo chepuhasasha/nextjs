@@ -30,7 +30,7 @@ export default async function handler(req, res) {
         const newUser = await Users.create(user);
         res.status(200).send({ done: true, user: newUser });
       } else {
-        return res.json({ message: "bad request", error: true });
+        return res.status(401).json({ message: "bad request", error: true });
       }
       break;
     }

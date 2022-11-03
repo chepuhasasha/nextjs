@@ -26,7 +26,7 @@ export default function Home() {
             offers many opportunities to distinguish and grow your business! Be
             strong and courageous! CEO of QTB KOREA Maria Lakienko
           </P>
-          <Button>Связаться с нами</Button>
+          <Button>connect with us</Button>
         </Block>
         <Block area="2/5/3/11" padding="0">
           <MaskBlock mode={0} />
