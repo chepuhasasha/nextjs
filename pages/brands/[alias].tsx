@@ -6,20 +6,24 @@ import { Block, Grid } from "../../components/wrappers";
 import { MainLayout } from "../../layouts/main/main";
 import { IBrandDB } from "../../models/brands";
 
-export default function BrandPage({ brand }: { brand: IBrandDB }) {
+export default function BrandPage({ brand }: { brand: IBrandDB | null }) {
   return (
-    <MainLayout title={brand.title}>
-      <Grid rows="repeat(10, max-content)" cols="repeat(3, 1fr)">
-        <Block area="1/1/2/4" padding="0">
-          <img src={brand.baner} alt="" height={300} />
-        </Block>
-        <Block area="2/1/3/4" padding="40px">
-          <H1>{brand.title}</H1>
-          <P>{brand.description}</P>
-          {/* {brand && <BrandAdminPreview brand={brand} />} */}
-        </Block>
-      </Grid>
-    </MainLayout>
+    <>
+      {brand && (
+        <MainLayout title={brand.title}>
+          <Grid rows="repeat(10, max-content)" cols="repeat(3, 1fr)">
+            <Block area="1/1/2/4" padding="0">
+              <img src={brand.baner} alt="" height={300} />
+            </Block>
+            <Block area="2/1/3/4" padding="40px">
+              <H1>{brand.title}</H1>
+              <P>{brand.description}</P>
+              {/* {brand && <BrandAdminPreview brand={brand} />} */}
+            </Block>
+          </Grid>
+        </MainLayout>
+      )}
+    </>
   );
 }
 const domain =
@@ -51,18 +55,20 @@ export const getStaticProps: GetStaticProps = async ({
       notFound: true,
     };
   }
-  const { data: brand } = await axios.post<IBrandDB[]>(domain + "/api/brands", {
-    alias: params.alias,
-  });
-  if (brand.length === 0) {
-    return {
-      notFound: true,
-    };
-  }
+  await axios
+    .post<IBrandDB[]>(domain + "/api/brands", { alias: params.alias })
+    .then((res) => {
+      return {
+        props: {
+          brands: res.data[0],
+        },
+      };
+    })
+    .catch((err) => console.log(err.message));
 
   return {
     props: {
-      brand: brand[0],
+      brands: null,
     },
   };
 };

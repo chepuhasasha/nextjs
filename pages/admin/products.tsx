@@ -36,6 +36,7 @@ function Products({
     Record<string, string>
   >({});
   const [buy_links, setBuyLinks] = useState<Record<string, string>>({});
+  console.log(errors);
 
   const newProduct = (data: IProductDB) => {
     if (!baner && photos.length == 0) {
@@ -88,7 +89,11 @@ function Products({
             label="Brand"
             placeholder="brand"
             register={brand}
-            options={brands.map((b) => ({ name: b.title, value: b._id }))}
+            options={
+              brands.length > 0
+                ? brands.map((b) => ({ name: b.title, value: b._id }))
+                : []
+            }
             {...restBrand}
           />
           <MapObject
@@ -113,7 +118,7 @@ function Products({
         </Form>
       </Block>
       <Grid rows="auto" cols="1fr" area="1/1/5/3">
-        {products &&
+        {products.length > 0 &&
           products.map((product) => (
             <ProductCard key={product._id} product={product} />
           ))}
@@ -129,17 +134,28 @@ const domain =
     : process.env.NEXT_PUBLIC_DOMAIN;
 
 export const getStaticProps: GetStaticProps = async () => {
-  const products = await axios
+  const props: {
+    products: IProductDB[];
+    brands: IBrandDB[];
+  } = {
+    products: [],
+    brands: [],
+  };
+
+  await axios
     .post<IProductDB[]>(domain + "/api/products", {})
-    .then((res) => res.data);
-  const brands = await axios
+    .then((res) => {
+      props.products = res.data;
+    })
+    .catch((err) => console.log(err.message));
+  await axios
     .post<IBrandDB[]>(domain + "/api/brands", {})
-    .then((res) => res.data);
+    .then((res) => {
+      props.brands = res.data;
+    })
+    .catch((err) => console.log(err.message));
 
   return {
-    props: {
-      products,
-      brands,
-    },
+    props,
   };
 };
