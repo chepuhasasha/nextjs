@@ -32,9 +32,10 @@ function Products({
   });
   const [baner, setBaner] = useState<string | null>(null);
   const [photos, setPhotos] = useState<string[]>([]);
-  const [characteristics, setCharacteristics] = useState<Record<string, string>>({});
+  const [characteristics, setCharacteristics] = useState<
+    Record<string, string>
+  >({});
   const [buy_links, setBuyLinks] = useState<Record<string, string>>({});
-
 
   const newProduct = (data: IProductDB) => {
     if (!baner && photos.length == 0) {
@@ -47,8 +48,7 @@ function Products({
           baner: baner as string,
           images: photos,
           characteristics,
-          buy_links
-  
+          buy_links,
         },
         (res) => {
           console.log(res);
@@ -129,14 +129,12 @@ const domain =
     : process.env.NEXT_PUBLIC_DOMAIN;
 
 export const getStaticProps: GetStaticProps = async () => {
-  const { data: products } = await axios.post<IProductDB[]>(
-    domain+ "/api/products",
-    {}
-  );
-  const { data: brands } = await axios.post<IBrandDB[]>(
-    domain+ "/api/brands",
-    {}
-  );
+  const products = await axios
+    .post<IProductDB[]>(domain + "/api/products", {})
+    .then((res) => res.data);
+  const brands = await axios
+    .post<IBrandDB[]>(domain + "/api/brands", {})
+    .then((res) => res.data);
 
   return {
     props: {

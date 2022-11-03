@@ -105,14 +105,20 @@ const domain =
     ? process.env.NEXT_PUBLIC_DEV_DOMAIN
     : process.env.NEXT_PUBLIC_DOMAIN;
 export const getStaticProps: GetStaticProps = async () => {
-  const { data: brands } = await axios.post<IBrandDB[]>(
-    domain + "/api/brands",
-    {}
-  );
+  await axios
+    .post<IBrandDB[]>(domain + "/api/brands", {})
+    .then((res) => {
+      return {
+        props: {
+          brands: res.data
+        }
+      };
+    })
+    .catch((err) => console.log(err.message));
 
   return {
     props: {
-      brands,
+      brands: [],
     },
   };
 };

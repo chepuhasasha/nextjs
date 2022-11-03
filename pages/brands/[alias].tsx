@@ -28,12 +28,17 @@ const domain =
     : process.env.NEXT_PUBLIC_DOMAIN;
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const { data: brands } = await axios.post<IBrandDB[]>(
-    domain + "/api/brands",
-    {}
-  );
+  await axios
+    .post<IBrandDB[]>(domain + "/api/brands", {})
+    .then((res) => {
+      return {
+        paths: res.data.map((brand) => `/brands/${brand.alias}`),
+        fallback: true,
+      };
+    })
+    .catch((err) => console.log(err.message));
   return {
-    paths: brands.map((brand) => `/brands/${brand.alias}`),
+    paths: [],
     fallback: true,
   };
 };
@@ -46,10 +51,9 @@ export const getStaticProps: GetStaticProps = async ({
       notFound: true,
     };
   }
-  const { data: brand } = await axios.post<IBrandDB[]>(
-    domain + "/api/brands",
-    { alias: params.alias }
-  );
+  const { data: brand } = await axios.post<IBrandDB[]>(domain + "/api/brands", {
+    alias: params.alias,
+  });
   if (brand.length === 0) {
     return {
       notFound: true,
