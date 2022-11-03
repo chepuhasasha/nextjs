@@ -5,6 +5,7 @@ import { API } from "../utils/api";
 type UserForm = {
   username: string;
   password: string;
+  key: string
 };
 
 export default function SignUp() {
@@ -38,6 +39,10 @@ export default function SignUp() {
         <input
           placeholder="password"
           {...register("password", { required: true })}
+        />
+        <input
+          placeholder="key"
+          {...register("key", { required: true })}
         />
 
         <input type="submit" />

@@ -15,11 +15,9 @@ import { ProductCard } from "../../components/blocks/Product/Product";
 function Products({
   products,
   brands,
-  images
 }: {
   products: IProductDB[];
   brands: IBrandDB[];
-  images: string[]
 }) {
   const {
     register,
@@ -139,16 +137,11 @@ export const getStaticProps: GetStaticProps = async () => {
     domain+ "/api/brands",
     {}
   );
-  const { data: images } = await axios.get<string[]>(
-    domain + "/api/images",
-    {}
-  );
 
   return {
     props: {
       products,
       brands,
-      images
     },
   };
 };
