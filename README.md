@@ -6,14 +6,16 @@
 npm i
 ```
 
-### Start docker
+### Start prod docker
 
 ```
-cd docker
-docker-compose up
+docker-compose -f docker/docker-compose.yaml --env-file .env up
 ```
 
 ### Dev
+```
+docker-compose -f docker/docker-compose_dev.yaml --env-file .env up
+```
 
 ```
 npm run dev
